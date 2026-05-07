@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+rmg_base.access_rmg_buyer_all,rmg.buyer.all,model_rmg_buyer,base.group_user,1,1,1,1
+access_rmg_security_groups,rmg_security_groups access,model_rmg_security_groups,base.group_user,1,1,1,1
+access_rmg_buyer_admin,rmg.buyer admin,model_rmg_buyer,group_rmg_admin,1,1
+access_rmg_buyer_manager,rmg.buyer manager,model_rmg_buyer,group_rmg_manager,1,1
+access_rmg_buyer_user,rmg.buyer user,model_rmg_buyer,group_rmg_user,1,0

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- <record id="view_rmg_buyer_form" model="ir.ui.view">
+        <field name="name">rmg.buyer.form</field>
+        <field name="model">rmg.buyer</field>
+        <field>form</field>
+        Add more <field> tags here 
+    </record> -->
+
+    <record id="view_rmg_buyer_form" model="ir.ui.view">
+        <field name="name">rmg.buyer.form</field>
+        <field name="model">rmg.buyer</field>
+        <field name="type">form</field>
+        <field name="priority">16</field>
+        <field name="arch" type="xml">
+            <form string="বায়ার">
+
+                 <!-- ── HEADER: বাটন ও Status bar ── -->
+                <header>
+                    <button name="action_confirm" 
+                            string="নিশ্চিত করুন" 
+                            type="object" 
+                            class="oe_highlight"/>  <!-- প্রাথমিক বাটন (নীল) -->
+                </header>
+
+                <!-- ── SHEET: মূল ফর্ম এলাকা ── -->
+                <sheet>
+                    <!-- শিরোনাম এলাকা -->
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"
+                                placeholder="বায়ারের নাম লিখুন..."/>
+                        </h1>
+                    </div>
+
+                    <!-- ── GROUP 1: যোগাযোগের তথ্য ── -->
+                    <group string="যোগাযোগের তথ্য">
+
+                            <group>  <!-- বামের কলাম -->
+                                <field name="country"/>
+                                <field name="email"
+                                    widget="email"/>  <!-- ক্লিক করলে email app খোলে -->
+                            </group>
+
+                            <group>  <!-- ডানের কলাম -->
+                                <field name="phone"
+                                    widget="phone"/>  <!-- ক্লিক করলে phone app খোলে -->
+                                <field name="website"
+                                    widget="url"/>  <!-- link হিসেবে দেখায় -->
+                            </group>
+                    </group>
+
+                    <!-- ── GROUP 2: ব্যবসায়িক তথ্য ── -->
+                    <group string="ব্যবসায়িক তথ্য">
+
+                        <group>
+                            <field name="buyer_code"/>
+                            <field name="payment_terms"/>
+                        </group>
+
+                        <group>
+                            <field name="active"
+                                widget="boolean_toggle"/>  <!-- সুন্দর toggle switch -->
+                        </group>
+                    </group>
+
+                    <!-- ── NOTES: সম্পূর্ণ প্রস্থ ── -->
+                    <notebook>
+                        <page string="নোট ও মন্তব্য">
+                            <field name="notes"
+                                placeholder="বায়ার সম্পর্কে বিশেষ তথ্য লিখুন..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <!-- ── CHATTER: বার্তা লগ ── -->
+                <chatter/>  <!-- mail.thread inherit করলে কাজ করবে -->
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Step-01: Security Category -->
+    <record id="module_category_rmg" model="ir.model.category">
+        <field name="name">RMG কারখানা ব্যবস্থাপনা</field>
+        <field name="description">বাংলাদেশ RMG কারখানার জন্য নিরাপত্তা গ্রুপ</field>
+        <field name="sequence">10</field>
+    </record>
+
+<!-- ══════════════════════════════════════════
+       STEP 2: তিনটি Group তৈরি করুন
+  ══════════════════════════════════════════ -->
+
+  <!-- ── GROUP 1: RMG User (সাধারণ ব্যবহারকারী) ── -->
+  <record id="group_rmg_user"
+           model="res.groups">
+    <field name="name">User</field>
+    <field name="category_id"
+           ref="module_category_rmg"/>
+    <!-- category_id: কোন Category-র অধীনে -->
+    <field name="implied_ids"
+           eval="[(4, ref('base.group_user'))]"/>
+    <!-- implied_ids: base.group_user পেলে এই group-ও পাবে
+         (4, id) = Many2many তে একটি record যোগ করো -->
+  </record>
+
+
+  <!-- ── GROUP 2: RMG Manager (ম্যানেজার) ── -->
+  <record id="group_rmg_manager"
+           model="res.groups">
+    <field name="name">Manager</field>
+    <field name="category_id"
+           ref="module_category_rmg"/>
+    <field name="implied_ids"
+           eval="[(4, ref('rmg_base.group_rmg_user'))]"/>
+    <!-- Manager পেলে User-ও পাবে (উত্তরাধিকার) -->
+  </record>
+
+  <!-- ── GROUP 3: RMG Admin (সর্বোচ্চ অনুমতি) ── -->
+  <record id="group_rmg_admin"
+           model="res.groups">
+    <field name="name">Administrator</field>
+    <field name="category_id"
+           ref="module_category_rmg"/>
+    <field name="implied_ids"
+           eval="[(4, ref('rmg_base.group_rmg_manager'))]"/>
+    <!-- Admin পেলে Manager ও User উভয়ই পাবে (শৃঙ্খল) -->
+  </record>
+
+</odoo>

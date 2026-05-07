@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ১. প্রধান মেনু (Top Level) -->
+  <menuitem
+    id="menu_rmg_root"
+    name="RMG কারখানা"
+    sequence="10"/>
+    <!-- sequence: মেনু বারে অবস্থান (কম = বামে) -->
+
+  <!-- ২. সাব-মেনু: বায়ার ব্যবস্থাপনা -->
+  <menuitem
+    id="menu_rmg_buyers"
+    name="বায়ার ব্যবস্থাপনা"
+    parent="menu_rmg_root"
+    sequence="10"/>
+
+  <!-- ৩. মেনু আইটেম: বায়ারের তালিকা -->
+  <menuitem
+    id="menu_rmg_buyer_list"
+    name="বায়ারের তালিকা"
+    parent="menu_rmg_buyers"
+    action="action_rmg_buyer"
+    sequence="10"/><!-- action থেকে View খোলে -->
+
+</odoo>

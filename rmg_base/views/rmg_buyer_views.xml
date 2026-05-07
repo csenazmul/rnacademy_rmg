@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+  <!-- ═══════════════════════════════════════
+       ১. FORM VIEW
+  ═══════════════════════════════════════ -->
+  <record id="view_rmg_buyer_form" model="ir.ui.view">
+    <field name="name">rmg.buyer.form</field>
+    <field name="model">rmg.buyer</field>
+    <field name="type">form</field>
+    <field name="arch" type="xml">
+      <form string="বায়ার">
+        <sheet>
+
+          <!-- Smart Buttons (orders count) -->
+          <div class="oe_button_box" name="button_box"></div>
+
+          <div class="oe_title">
+            <h1><field name="name"
+                       placeholder="বায়ারের নাম..."/></h1>
+          </div>
+
+          <group string="যোগাযোগের তথ্য">
+            <group>
+              <field name="country"/>
+              <field name="email" widget="email"/>
+            </group>
+            <group>
+              <field name="phone" widget="phone"/>
+              <field name="website" widget="url"/>
+            </group>
+          </group>
+
+          <group string="ব্যবসায়িক তথ্য">
+            <group>
+              <field name="buyer_code" placeholder="Buyer Code"/>
+              <field name="payment_terms"/>
+            </group>
+            <group>
+              <field name="active" widget="boolean_toggle"/>
+            </group>
+          </group>
+
+          <notebook>
+            <page string="নোট">
+              <field name="notes"/>
+            </page>
+          </notebook>
+
+        </sheet>
+        <chatter/>
+      </form>
+    </field>
+  </record>
+
+  <!-- ═══════════════════════════════════════
+       ২. TREE VIEW
+  ═══════════════════════════════════════ -->
+  <record id="view_rmg_buyer_tree" model="ir.ui.view">
+    <field name="name">rmg.buyer.tree</field>
+    <field name="model">rmg.buyer</field>
+    <field name="type">list</field>
+    <field name="arch" type="xml">
+      <list string="বায়ারের তালিকা"
+            decoration-muted="not active">
+        <field name="name"/>
+        <field name="country"/>
+        <field name="email"/>
+        <field name="buyer_code"/>
+        <field name="payment_terms" string="পেমেন্ট (দিন)"/>
+        <field name="active" widget="boolean_toggle" optional="show"/>
+      </list>
+    </field>
+  </record>
+
+  <!-- ═══════════════════════════════════════
+       ৩. SEARCH VIEW
+  ═══════════════════════════════════════ -->
+    <record id="view_rmg_buyer_search" model="ir.ui.view">
+        <field name="name">rmg.buyer.search</field>
+        <field name="model">rmg.buyer</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search>
+            <field name="name"/>
+            <field name="country"/>
+            <field name="email"/>
+
+            <separator/>
+
+            <filter string="সক্রিয় বায়ার"
+                    name="active"
+                    domain="[('active','=',True)]"/>
+
+            <filter string="নিষ্ক্রিয় বায়ার"
+                    name="inactive"
+                    domain="[('active','=',False)]"/>
+
+            <separator/>
+
+            <!-- Group By -->
+            <filter string="দেশ অনুযায়ী"
+                    name="group_by_country"
+                    context="{'group_by': 'country'}"/>
+            </search>
+        </field>
+    </record>
+
+  <!-- ═══════════════════════════════════════
+       ৪. WINDOW ACTION — View খোলার নির্দেশ
+  ═══════════════════════════════════════ -->
+  <record id="action_rmg_buyer" model="ir.actions.act_window">
+    <field name="name">বায়ার তালিকা</field>
+    <field name="res_model">rmg.buyer</field>
+    <field name="view_mode">list,form</field>
+    <!-- প্রথমে list দেখাবে, ক্লিক করলে form -->
+    <field name="context">{'search_default_active': 1}</field>
+    <!-- ডিফল্টে 'সক্রিয় বায়ার' ফিল্টার চালু -->
+  </record>
+
+
+  <!-- ══════════════════════════════════════════
+     Record Rules — রেকর্ড-স্তর নিরাপত্তা
+  ══════════════════════════════════════════ -->
+
+  <!-- Rule 1: User শুধু নিজের তৈরি বায়ার দেখবে
+     (Group: group_rmg_user) -->
+<record id="rule_rmg_buyer_user_own"
+         model="ir.rule">
+  <field name="name">RMG User: নিজের তৈরি বায়ার</field>
+  <field name="model_id"
+         ref="model_rmg_buyer"/>
+  <field name="domain_force">
+    [('create_uid', '=', user.id)]
+  </field>
+  <!-- create_uid = কে তৈরি করেছে
+       user.id = বর্তমান ইউজারের ID -->
+  <field name="groups"
+         eval="[(4, ref('group_rmg_user'))]"/>
+  <field name="perm_read"
+         eval="True"/>
+  <field name="perm_write"
+         eval="False"/>
+  <field name="perm_create"
+         eval="False"/>
+  <field name="perm_unlink"
+         eval="False"/>
+</record>
+
+<!-- Rule 2: Manager সব active বায়ার দেখবে -->
+<record id="rule_rmg_buyer_manager_all"
+         model="ir.rule">
+  <field name="name">RMG Manager: সব বায়ার দেখা</field>
+  <field name="model_id"
+         ref="model_rmg_buyer"/>
+  <field name="domain_force">
+    [(1, '=', 1)]
+  </field>
+  <!-- (1, '=', 1) = সবসময় True = সব রেকর্ড দেখা যাবে -->
+  <field name="groups"
+         eval="[(4, ref('group_rmg_manager'))]"/>
+  <field name="perm_read" eval="True"/>
+  <field name="perm_write" eval="True"/>
+  <field name="perm_create" eval="True"/>
+  <field name="perm_unlink" eval="False"/>
+</record>
+
+</odoo>
