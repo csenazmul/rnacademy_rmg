@@ -1,6 +1,17 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-rmg_base.access_rmg_buyer_all,rmg.buyer.all,model_rmg_buyer,base.group_user,1,1,1,1
+rmg_base.access_rmg_buyer_all,rmg_buyer_all,model_rmg_buyer,base.group_user,1,1,1,1
 access_rmg_security_groups,rmg_security_groups access,model_rmg_security_groups,base.group_user,1,1,1,1
-access_rmg_buyer_admin,rmg.buyer admin,model_rmg_buyer,group_rmg_admin,1,1
-access_rmg_buyer_manager,rmg.buyer manager,model_rmg_buyer,group_rmg_manager,1,1
-access_rmg_buyer_user,rmg.buyer user,model_rmg_buyer,group_rmg_user,1,0
+access_rmg_buyer_admin,rmg_buyer admin,model_rmg_buyer,group_rmg_admin,1,1
+access_rmg_buyer_manager,rmg_buyer manager,model_rmg_buyer,group_rmg_manager,1,1
+access_rmg_buyer_user,rmg_buyer user,model_rmg_buyer,group_rmg_user,1,0
+
+# rmg.order (নতুন)
+access_rmg_order_admin,rmg.order admin,model_rmg_order,rmg_base.group_rmg_admin,1,1,1,1
+access_rmg_order_manager,rmg.order manager,model_rmg_order,rmg_base.group_rmg_manager,1,1,1,0
+access_rmg_order_user,rmg.order user,model_rmg_order,rmg_base.group_rmg_user,1,0,0,0
+
+# rmg.order.line (নতুন) — dot কে underscore করুন
+access_rmg_order_line_admin,rmg_order_line admin,model_rmg_order_line,rmg_base.group_rmg_admin,1,1,1,1
+access_rmg_order_line_manager,rmg_order_line manager,model_rmg_order_line,rmg_base.group_rmg_manager,1,1,1,0
+access_rmg_order_line_user,rmg.order.line user,model_rmg_order_line,rmg_base.group_rmg_user,1,0,0,0
+,,,,,,,
